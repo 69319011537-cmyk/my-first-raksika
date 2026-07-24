@@ -1,23 +1,116 @@
-// 1. เรียกใชงาน Module ที่ชื่อวา 'http' ซึ่งเปนระบบพื้นฐานของ Node.js สําหรับทําเซิรฟ เวอร
- const http = require('http');
+// ==========================================
+// Web Server ด้วย Node.js
+// ผู้จัดทำ : นางสาวรักษิกา สันดี
+// รหัสนักศึกษา : 69319011537
+// ==========================================
 
- // 2. กําหนดชองทาง (Port) ที่เซิรฟเวอรจะใชสื่อสาร โดยใหใชของที่ Cloud กําหนดมา(process.env.PORT) ถาไมมีใหใช 3000
- const port = process.env.PORT || 3000;
+// 1. เรียกใช้งาน Module http
+const http = require('http');
 
- // 3. สรางเครื่องแมขาย (Server) ที่คอยรับคําขอ (req) และตอบกลับ (res)
- const server = http.createServer((req, res) => {
+// 2. กำหนด Port
+const port = process.env.PORT || 3000;
 
- // 3.1 ตั้งรหัสสถานะ 200 หมายถึง "ทํางานสําเร็จ (OK)"
- res.statusCode = 200;
+// 3. สร้าง Web Server
+const server = http.createServer((req, res) => {
 
- // 3.2 บอกเบราวเซอรของผูใชวา สิ่งที่สงกลับไปคือไฟลขอความแบบ HTML และรองรับภาษาไทย (utf-8)
- res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    // กำหนดสถานะการตอบกลับ
+    res.statusCode = 200;
 
-// 3.3 สงขอมูลหนาเว็บกลับไปหาผูใช (*** ใหนักศึกษาแกชื่อ-นามสกุลตรงนี้ ***)
-res.end('<h1>สวัสดีค่ะ! นี่คือ Web Server ของ นางสาวรักษิกา สันดี รหัสนักศึกษา 69319011537 </h1><p>เครื่องแม่ข่ายทํางานปกติบนระบบ Railway แล้วค่ะ!</p>');
- });
+    // กำหนดชนิดข้อมูลเป็น HTML และรองรับภาษาไทย
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
- // 4. สั่งใหเซิรฟเวอรเริ่มตนเปดรับฟงการเชื่อมตอตาม Port ที่กําหนดไว
- server.listen(port, () => {
- console.log(`Server is running! เครื่องแม่ข่ายเปิดทํางานแล้วที่ช่องทาง: ${port}`);
- });
+    // หน้าเว็บ HTML
+    res.end(`
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>My Web Server</title>
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family:Tahoma, sans-serif;
+            background:linear-gradient(135deg,#4facfe,#00f2fe);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .card{
+            width:600px;
+            background:#ffffff;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,.2);
+        }
+
+        h1{
+            color:#0077cc;
+            margin-bottom:15px;
+        }
+
+        h2{
+            color:#444;
+            margin:10px 0;
+        }
+
+        p{
+            color:#666;
+            font-size:18px;
+        }
+
+        .status{
+            display:inline-block;
+            margin-top:20px;
+            background:#28a745;
+            color:white;
+            padding:10px 25px;
+            border-radius:30px;
+            font-weight:bold;
+        }
+
+        footer{
+            margin-top:25px;
+            color:#999;
+            font-size:14px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>🌐 Welcome to My Web Server</h1>
+
+        <h2>นางสาวรักษิกา สันดี</h2>
+
+        <p><strong>รหัสนักศึกษา :</strong> 69319011537</p>
+
+        <div class="status">
+            ✅ Railway Server กำลังทำงานปกติ
+        </div>
+
+        <footer>
+            Node.js Web Server | Information Technology
+        </footer>
+
+    </div>
+
+</body>
+</html>
+    `);
+});
+
+// 4. เปิดใช้งาน Server
+server.listen(port, () => {
+    console.log("==================================");
+    console.log("🚀 Web Server Started Successfully");
+    console.log(`🌐 Running on Port : ${port}`);
+    console.log("==================================");
+});
